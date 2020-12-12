@@ -1,0 +1,10 @@
+django
+gunicorn
+pylint
+black
+autopep8
+flake8
+tox
+line-bot-sdk
+requests
+beautifulsoup4
