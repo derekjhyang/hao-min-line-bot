@@ -150,7 +150,7 @@ class TrafficLocationMessage(Message):
                     "type": "bubble",
                     "header": {
                         "type": "box",
-                        "layout": "vertical",
+                        "layout": "baseline",
                         "contents": [
                             {
                                 "type": "text",
@@ -161,9 +161,10 @@ class TrafficLocationMessage(Message):
                     },
                     "hero": {
                         "type": "image",
-                        "url": "https://upload.cc/i1/2020/12/13/Wk3u15.jpg"
+                        "url": "https://upload.cc/i1/2020/12/13/Wk3u15.jpg",
+                        "size": "full"
                     },
-                    "body": {
+                    "footer": {
                         "type": "box",
                         "layout": "vertical",
                         "contents": [
@@ -190,7 +191,7 @@ class TrafficLocationMessage(Message):
                     "type": "bubble",
                     "header": {
                         "type": "box",
-                        "layout": "vertical",
+                        "layout": "baseline",
                         "contents": [
                             {
                                 "type": "text",
@@ -201,9 +202,10 @@ class TrafficLocationMessage(Message):
                     },
                     "hero": {
                         "type": "image",
-                        "url": "https://upload.cc/i1/2020/12/13/Wb6BCc.jpg"
+                        "url": "https://upload.cc/i1/2020/12/13/Wb6BCc.jpg",
+                        "size": "full"
                     },
-                    "body": {
+                    "footer": {
                         "type": "box",
                         "layout": "vertical",
                         "contents": [
@@ -220,7 +222,7 @@ class TrafficLocationMessage(Message):
                                 "action": {
                                     "type": "postback",
                                     "label": "停車資訊",
-                                    "data": "parking_info"
+                                    "data": "park_info"
                                 }
                             }
                         ]
