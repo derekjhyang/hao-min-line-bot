@@ -54,11 +54,13 @@ def callback(request):
                     )
                     line_bot_api.reply_message(event.reply_token, msg)
                 elif event.postback.data == "taken_by_shuttle":
-                    msg = ImageSendMessage(
+                    txt_msg = TextMessage(
+                        text="白金花園酒店目前提供給喜宴賓客的接駁車資訊如下，請大家務必準時上車"+chr(0x100049)+"，逾時不候。"+chr(0x10007C))
+                    img_msg = ImageSendMessage(
                         original_content_url="https://upload.cc/i1/2020/12/13/9kRd7I.jpg",
                         preview_image_url="https://upload.cc/i1/2020/12/13/9kRd7I.jpg"
                     )
-                    line_bot_api.reply_message(event.reply_token, msg)
+                    line_bot_api.reply_message(event.reply_token, [txt_msg, img_msg])
                 elif event.postback.data == "location_map":
                     msg = LocationMessage(
                         title="新店白金花園酒店",
