@@ -47,22 +47,29 @@ def callback(request):
                     line_bot_api.reply_message(event.reply_token, msg)
 
             elif isinstance(event, PostbackEvent):  # Post Back Event
-                if event.postback.data == "taken_by_metro":
-                    line_bot_api.reply_message(
-                        event.reply_token, TextMessage(text="taken_by_metro")
+                if event.postback.data == "taken_by_metro_and_bus":
+                    msg = FlexSendMessage(
+                        alt_text="捷運及公車轉乘資訊",
+                        contents=MetroAndBusMessage().content()
                     )
-                elif event.postback.data == "taken_by_bus":
-                    line_bot_api.reply_message(
-                        event.reply_token, TextMessage(text="taken_by_bus")
+                    line_bot_api.reply_message(event.reply_token, msg)
+                elif event.postback.data == "taken_by_shuttle":
+                    msg = FlexSendMessage(
+                        alt_text="往新店白金花園酒店： 從捷運黃線南勢角站4號出口上車，時間11:40及12:10。返程時間為15:00及15:30。",
+                        contents=ShuttleBusMessage().content()
                     )
+                    line_bot_api.reply_message(event.reply_token, msg)
                 elif event.postback.data == "location_map":
-                    location_message = LocationMessage(
+                    msg = LocationMessage(
                         title="新店白金花園酒店",
                         address="新北市新店區安興路77號",
                         latitude=24.97505893694744,
                         longitude=121.51534850259982,
                     )
-                    line_bot_api.reply_message(event.reply_token, location_message)
+                    line_bot_api.reply_message(event.reply_token, msg)
+                elif event.postback.data == "park_info":
+                    pass
+
 
         return HttpResponse()
     else:

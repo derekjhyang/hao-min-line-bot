@@ -172,16 +172,16 @@ class TrafficLocationMessage(Message):
                                 "type": "button",
                                 "action": {
                                     "type": "postback",
-                                    "label": "搭捷運",
-                                    "data": "taken_by_metro"
+                                    "label": "搭捷運/公車",
+                                    "data": "taken_by_metro_and_bus"
                                 }
                             },
                             {
                                 "type": "button",
                                 "action": {
                                     "type": "postback",
-                                    "label": "搭公車",
-                                    "data": "taken_by_bus"
+                                    "label": "接駁車",
+                                    "data": "taken_by_shuttle"
                                 }
                             }
                         ]
@@ -229,6 +229,34 @@ class TrafficLocationMessage(Message):
                     }
                 }
             ]
+        }
+
+class ShuttleBusMessage(Message):
+    def content(self):
+        return {
+            "type": "bubble",
+                "hero": {
+                    "type": "image",
+                    "url": "https://upload.cc/i1/2020/12/13/9kRd7I.jpg",
+                    "size": "full",
+                    "margin": "sm",
+                    "align": "center",
+                    "position": "absolute"
+                }
+        }
+
+class MetroAndBusMessage(Message):
+    def content(self):
+        return {
+            "type": "bubble",
+            "hero": {
+                "type": "image",
+                "url": "https://upload.cc/i1/2020/12/13/qQ3Rgw.jpg",
+                "size": "full",
+                "margin": "sm",
+                "align": "center",
+                "position": "absolute"
+            }
         }
 
 if __name__ == '__main__':
