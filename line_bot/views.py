@@ -36,11 +36,17 @@ def callback(request):
                         event.reply_token, [txt_msg, sticker_msg]
                     )
                 elif event.message.text == "報名婚禮":
-                    msg = WeddingRegistrationMessage().content()
-                    line_bot_api.reply_message(
-                        event.reply_token,
-                        FlexSendMessage(alt_text="手刀報名去", contents=msg),
+                    flex_msg = FlexSendMessage(
+                        alt_text="手刀報名去",
+                        contents=WeddingRegistrationMessage().content(),
                     )
+                    txt_msg = TextMessage(
+                        text="趕緊登記預留您的專屬貴賓座位喔。"
+                        + chr(0x100080) * 3
+                        + "\n也歡迎填寫表單留下祝福，我們也會收到您的心意喔！"
+                        + chr(0x10007A) * 3
+                    )
+                    line_bot_api.reply_message(event.reply_token, [flex_msg, txt_msg])
                 elif event.message.text == "交通資訊":
                     msg = FlexSendMessage(
                         alt_text="如何抵達白金花園酒店",
@@ -53,17 +59,26 @@ def callback(request):
 
             elif isinstance(event, PostbackEvent):  # Post Back Event
                 if event.postback.data == "taken_by_metro_and_bus":
-                    msg = ImageSendMessage(
+                    txt_msg = TextMessage(
+                        text="提醒您防疫期間搭乘大眾運輸請務必配戴口罩"
+                        + chr(0x100020)
+                        + "。\n不然阿中部長會森氣氣喔"
+                        + chr(0x10001D)
+                        + "~~"
+                    )
+                    img_msg = ImageSendMessage(
                         original_content_url="https://upload.cc/i1/2020/12/13/qQ3Rgw.jpg",
                         preview_image_url="https://upload.cc/i1/2020/12/13/qQ3Rgw.jpg",
                     )
-                    line_bot_api.reply_message(event.reply_token, msg)
+                    line_bot_api.reply_message(event.reply_token, [txt_msg, img_msg])
                 elif event.postback.data == "taken_by_shuttle":
                     txt_msg = TextMessage(
-                        text="白金花園酒店目前提供給喜宴賓客的接駁車資訊如下，請大家務必準時上車"
+                        text="白金花園酒店目前提供給賓客的捷運接駁車時刻表如下，請大家務必準時上車"
                         + chr(0x100049)
-                        + "，逾時不候。希望各位可以玩的盡興，感謝您的大駕光臨。"
+                        + "，逾時不候"
                         + chr(0x10007C)
+                        + "。\n希望您可以玩的盡興，感謝您的大駕光臨。"
+                        + chr(0x100078) * 3
                     )
                     img_msg = ImageSendMessage(
                         original_content_url="https://upload.cc/i1/2020/12/13/9kRd7I.jpg",
@@ -71,13 +86,20 @@ def callback(request):
                     )
                     line_bot_api.reply_message(event.reply_token, [txt_msg, img_msg])
                 elif event.postback.data == "location_map":
-                    msg = LocationMessage(
+                    txt_msg = TextMessage(
+                        text="導航資訊如下，點選下方連結並開啟Google地圖導航至飯店"
+                        + chr(0x100049)
+                        + "。\n\n"
+                        + "提醒您開車不喝酒，喝酒不開車。德瑞克關心您～～"
+                        + chr(0x100081) * 3
+                    )
+                    loc_msg = LocationMessage(
                         title="新店白金花園酒店",
                         address="新北市新店區安興路77號",
                         latitude=24.97505893694744,
                         longitude=121.51534850259982,
                     )
-                    line_bot_api.reply_message(event.reply_token, msg)
+                    line_bot_api.reply_message(event.reply_token, [txt_msg, loc_msg])
                 elif event.postback.data == "park_info":
                     msg = TextMessage(
                         text="本飯店設有全平面車位共130席。若停滿的話可至旁邊的「新店安坑停車場」停車。(共114席)"
