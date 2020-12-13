@@ -239,9 +239,7 @@ class ShuttleBusMessage(Message):
                     "type": "image",
                     "url": "https://upload.cc/i1/2020/12/13/9kRd7I.jpg",
                     "size": "full",
-                    "margin": "sm",
                     "align": "center",
-                    "position": "absolute"
                 }
         }
 
@@ -253,9 +251,7 @@ class MetroAndBusMessage(Message):
                 "type": "image",
                 "url": "https://upload.cc/i1/2020/12/13/qQ3Rgw.jpg",
                 "size": "full",
-                "margin": "sm",
                 "align": "center",
-                "position": "absolute"
             }
         }
 

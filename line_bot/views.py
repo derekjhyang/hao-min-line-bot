@@ -68,7 +68,9 @@ def callback(request):
                     )
                     line_bot_api.reply_message(event.reply_token, msg)
                 elif event.postback.data == "park_info":
-                    msg = TextMessage(text="本飯店設有全平面車位共130席。若停滿的話可至旁邊的「新店安坑停車場」停車。(共114席)")
+                    msg = TextMessage(
+                        text="本飯店設有全平面車位共130席。若停滿的話可至旁邊的「新店安坑停車場」停車。(共114席)"
+                    )
                     line_bot_api.reply_message(event.reply_token, msg)
 
 
