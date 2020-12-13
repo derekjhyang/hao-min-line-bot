@@ -231,29 +231,6 @@ class TrafficLocationMessage(Message):
             ]
         }
 
-class ShuttleBusMessage(Message):
-    def content(self):
-        return {
-            "type": "bubble",
-                "hero": {
-                    "type": "image",
-                    "url": "https://upload.cc/i1/2020/12/13/9kRd7I.jpg",
-                    "size": "full",
-                    "align": "center",
-                }
-        }
-
-class MetroAndBusMessage(Message):
-    def content(self):
-        return {
-            "type": "bubble",
-            "hero": {
-                "type": "image",
-                "url": "https://upload.cc/i1/2020/12/13/qQ3Rgw.jpg",
-                "size": "full",
-                "align": "center",
-            }
-        }
 
 if __name__ == '__main__':
     w = WeddingRegistrationMessage()

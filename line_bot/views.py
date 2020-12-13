@@ -48,15 +48,15 @@ def callback(request):
 
             elif isinstance(event, PostbackEvent):  # Post Back Event
                 if event.postback.data == "taken_by_metro_and_bus":
-                    msg = FlexSendMessage(
-                        alt_text="捷運及公車轉乘資訊",
-                        contents=MetroAndBusMessage().content()
+                    msg = ImageSendMessage(
+                        original_content_url="https://upload.cc/i1/2020/12/13/qQ3Rgw.jpg",
+                        preview_image_url="https://upload.cc/i1/2020/12/13/qQ3Rgw.jpg"
                     )
                     line_bot_api.reply_message(event.reply_token, msg)
                 elif event.postback.data == "taken_by_shuttle":
-                    msg = FlexSendMessage(
-                        alt_text="往新店白金花園酒店： 從捷運黃線南勢角站4號出口上車，時間11:40及12:10。返程時間為15:00及15:30。",
-                        contents=ShuttleBusMessage().content()
+                    msg = ImageSendMessage(
+                        original_content_url="https://upload.cc/i1/2020/12/13/9kRd7I.jpg",
+                        preview_image_url="https://upload.cc/i1/2020/12/13/9kRd7I.jpg"
                     )
                     line_bot_api.reply_message(event.reply_token, msg)
                 elif event.postback.data == "location_map":
