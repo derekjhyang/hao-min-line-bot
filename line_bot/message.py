@@ -161,7 +161,7 @@ class TrafficLocationMessage(Message):
                     },
                     "hero": {
                         "type": "image",
-                        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png"
+                        "url": "https://upload.cc/i1/2020/12/13/Wk3u15.jpg"
                     },
                     "body": {
                         "type": "box",
@@ -201,7 +201,7 @@ class TrafficLocationMessage(Message):
                     },
                     "hero": {
                         "type": "image",
-                        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png"
+                        "url": "https://upload.cc/i1/2020/12/13/Wb6BCc.jpg"
                     },
                     "body": {
                         "type": "box",
