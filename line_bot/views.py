@@ -28,13 +28,18 @@ def callback(request):
         for event in events:
             if isinstance(event, MessageEvent):
                 if event.message.text == "婚紗輪播":
-                    msg = StickerMessage(package_id="11538", sticker_id="51626497")
-                    line_bot_api.reply_message(event.reply_token, msg)
+                    txt_msg = TextMessage(text="籌備中，敬請期待" + chr(0x100078))
+                    sticker_msg = StickerMessage(
+                        package_id="11538", sticker_id="51626497"
+                    )
+                    line_bot_api.reply_message(
+                        event.reply_token, [txt_msg, sticker_msg]
+                    )
                 elif event.message.text == "報名婚禮":
-                    msg = WeddingRegistrationMessage()
+                    msg = WeddingRegistrationMessage().content()
                     line_bot_api.reply_message(
                         event.reply_token,
-                        FlexSendMessage(alt_text="手刀報名去", contents=msg.content()),
+                        FlexSendMessage(alt_text="手刀報名去", contents=msg),
                     )
                 elif event.message.text == "交通資訊":
                     msg = FlexSendMessage(
@@ -50,15 +55,19 @@ def callback(request):
                 if event.postback.data == "taken_by_metro_and_bus":
                     msg = ImageSendMessage(
                         original_content_url="https://upload.cc/i1/2020/12/13/qQ3Rgw.jpg",
-                        preview_image_url="https://upload.cc/i1/2020/12/13/qQ3Rgw.jpg"
+                        preview_image_url="https://upload.cc/i1/2020/12/13/qQ3Rgw.jpg",
                     )
                     line_bot_api.reply_message(event.reply_token, msg)
                 elif event.postback.data == "taken_by_shuttle":
                     txt_msg = TextMessage(
-                        text="白金花園酒店目前提供給喜宴賓客的接駁車資訊如下，請大家務必準時上車"+chr(0x100049)+"，逾時不候。"+chr(0x10007C))
+                        text="白金花園酒店目前提供給喜宴賓客的接駁車資訊如下，請大家務必準時上車"
+                        + chr(0x100049)
+                        + "，逾時不候。希望各位可以玩的盡興，感謝您的大駕光臨。"
+                        + chr(0x10007C)
+                    )
                     img_msg = ImageSendMessage(
                         original_content_url="https://upload.cc/i1/2020/12/13/9kRd7I.jpg",
-                        preview_image_url="https://upload.cc/i1/2020/12/13/9kRd7I.jpg"
+                        preview_image_url="https://upload.cc/i1/2020/12/13/9kRd7I.jpg",
                     )
                     line_bot_api.reply_message(event.reply_token, [txt_msg, img_msg])
                 elif event.postback.data == "location_map":
@@ -74,7 +83,6 @@ def callback(request):
                         text="本飯店設有全平面車位共130席。若停滿的話可至旁邊的「新店安坑停車場」停車。(共114席)"
                     )
                     line_bot_api.reply_message(event.reply_token, msg)
-
 
         return HttpResponse()
     else:
