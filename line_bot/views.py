@@ -6,9 +6,7 @@ from django.conf import settings
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import *
-from .message import (
-    WeddingRegistrationMessage
-)
+from .message import *
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
@@ -41,20 +39,43 @@ def callback(request):
                         )
                     )
                 elif event.message.text == '交通資訊':
+                    _msg = TrafficLocationMessage()
                     line_bot_api.reply_message(
                         event.reply_token,
-                        LocationMessage(
-                            title='新店白金花園酒店',
-                            address='新北市新店區安興路77號',
-                            latitude=24.97505893694744,
-                            longitude=121.51534850259982
+                        FlexSendMessage(
+                            alt_text='如何抵達白金花園酒店',
+                            contents=_msg.content()
                         )
                     )
                 else:
                     pass
 
             elif isinstance(event, PostbackEvent): # Post Back Event
-                pass
+                if event.postback.data == 'taken_by_metro':
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        TextMessage(
+                            text='taken_by_metro'
+                        )
+                    )
+                elif event.postback.data == 'taken_by_bus':
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        TextMessage(
+                            text='taken_by_bus'
+                        )
+                    )
+                elif event.postback.data == 'location_map':
+                    location_message = LocationMessage(
+                        title='新店白金花園酒店',
+                        address='新北市新店區安興路77號',
+                        latitude=24.97505893694744,
+                        longitude=121.51534850259982
+                    )
+                    line_bot_api.reply_message(
+                        event.reply_token,
+                        location_message
+                    )
 
 
         return HttpResponse()
