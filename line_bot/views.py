@@ -1,3 +1,5 @@
+import re
+
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
@@ -52,6 +54,12 @@ def callback(request):
                         alt_text="如何抵達白金花園酒店",
                         contents=TrafficLocationMessage().content(),
                     )
+                    line_bot_api.reply_message(event.reply_token, msg)
+                elif event.message.text in ["hi", "Hi", "HI", "hello", "Hello", "HELLO", "嗨", "哈囉", "安安", "你好", "您好"]:
+                    msg = StickerMessage(package_id="11538", sticker_id="51626494")
+                    line_bot_api.reply_message(event.reply_token, msg)
+                elif event.message.text in ["恭喜", "congrats"]:
+                    msg = StickerMessage(package_id="11537", sticker_id="52002752")
                     line_bot_api.reply_message(event.reply_token, msg)
                 else:
                     msg = StickerMessage(package_id="11537", sticker_id="52002758")
