@@ -1,13 +1,18 @@
-import re
-
-from django.shortcuts import render
+from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
-from django.conf import settings
-
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
-from linebot.models import *
+from linebot.models import (
+    MessageEvent,
+    FlexSendMessage,
+    TextMessage,
+    StickerMessage,
+    PostbackEvent,
+    ImageSendMessage,
+    LocationMessage,
+)
+
 from .message import *
 
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
@@ -30,23 +35,19 @@ def callback(request):
         for event in events:
             if isinstance(event, MessageEvent):
                 if event.message.text == "婚紗輪播":
-                    txt_msg = TextMessage(text="籌備中，敬請期待" + chr(0x100078))
-                    sticker_msg = StickerMessage(
-                        package_id="11538", sticker_id="51626497"
-                    )
-                    line_bot_api.reply_message(
-                        event.reply_token, [txt_msg, sticker_msg]
-                    )
+                    # txt_msg = TextMessage(text="籌備中，敬請期待" + chr(0x100078))
+                    # sticker_msg = StickerMessage(
+                    #    package_id="11538", sticker_id="51626497"
+                    # )
+                    flex_msg = FlexSendMessage(alt_text="婚紗輪播", contents=WeddingPhotoSlideshowMessage().content())
+                    line_bot_api.reply_message(event.reply_token, [flex_msg])
                 elif event.message.text == "報名婚禮":
                     flex_msg = FlexSendMessage(
                         alt_text="手刀報名去",
                         contents=WeddingRegistrationMessage().content(),
                     )
                     txt_msg = TextMessage(
-                        text="趕緊登記預留您的專屬貴賓座位喔。"
-                        + chr(0x100080) * 3
-                        + "\n也歡迎填寫表單留下祝福，我們也會收到您的心意喔！"
-                        + chr(0x10007A) * 3
+                        text="趕緊登記預留您的專屬貴賓座位喔。" + chr(0x100080) * 3 + "\n也歡迎填寫表單留下祝福，我們也會收到您的心意喔！" + chr(0x10007A) * 3
                     )
                     line_bot_api.reply_message(event.reply_token, [flex_msg, txt_msg])
                 elif event.message.text == "交通資訊":
@@ -68,11 +69,7 @@ def callback(request):
             elif isinstance(event, PostbackEvent):  # Post Back Event
                 if event.postback.data == "taken_by_metro_and_bus":
                     txt_msg = TextMessage(
-                        text="提醒您防疫期間搭乘大眾運輸請務必配戴口罩"
-                        + chr(0x100020)
-                        + "。\n不然阿中部長會森氣氣喔"
-                        + chr(0x10001D)
-                        + "~~"
+                        text="提醒您防疫期間搭乘大眾運輸請務必配戴口罩" + chr(0x100020) + "。\n不然阿中部長會森氣氣喔" + chr(0x10001D) + "~~"
                     )
                     img_msg = ImageSendMessage(
                         original_content_url="https://upload.cc/i1/2020/12/13/qQ3Rgw.jpg",
@@ -109,9 +106,7 @@ def callback(request):
                     )
                     line_bot_api.reply_message(event.reply_token, [txt_msg, loc_msg])
                 elif event.postback.data == "park_info":
-                    msg = TextMessage(
-                        text="本飯店設有全平面車位共130席。若停滿的話可至旁邊的「新店安坑停車場」停車。(共114席)"
-                    )
+                    msg = TextMessage(text="本飯店設有全平面車位共130席。若停滿的話可至旁邊的「新店安坑停車場」停車。(共114席)")
                     line_bot_api.reply_message(event.reply_token, msg)
 
         return HttpResponse()
